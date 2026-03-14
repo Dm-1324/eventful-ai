@@ -22,10 +22,19 @@ export default function SettingsPage() {
 
   const saveProfile = async () => {
     setSaving(true);
-    const { error } = await updateProfile({ name, phone, notification_preference: notifPref });
-    setSaving(false);
-    if (error) toast.error(error.message);
-    else toast.success("Profile updated");
+    try {
+      const response = await updateProfile({ name, phone, notification_preference: notifPref });
+      console.log("[profile.update.response]", response);
+
+      if (response.error) {
+        toast.error(`Failed to save settings: ${response.error.message}`);
+        return;
+      }
+
+      toast.success("Settings saved successfully");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const changePassword = async () => {

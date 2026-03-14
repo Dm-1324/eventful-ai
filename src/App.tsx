@@ -1,10 +1,11 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, QueryCache, MutationCache } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/lib/theme";
 import { useAuth } from "@/hooks/useAuth";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { toast } from "sonner";
 import LoginPage from "@/pages/LoginPage";
 import DashboardPage from "@/pages/DashboardPage";
 import EventsPage from "@/pages/EventsPage";
@@ -12,7 +13,36 @@ import CalendarPage from "@/pages/CalendarPage";
 import SettingsPage from "@/pages/SettingsPage";
 import NotFound from "@/pages/NotFound";
 
-const queryClient = new QueryClient();
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+console.log("VITE_SUPABASE_URL:", SUPABASE_URL);
+console.log("VITE_SUPABASE_PUBLISHABLE_KEY:", SUPABASE_PUBLISHABLE_KEY);
+
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error) => {
+      console.error("[react-query][query][error]", error);
+      toast.error(`Request failed: ${error instanceof Error ? error.message : "Unknown error"}`);
+    },
+  }),
+  mutationCache: new MutationCache({
+    onError: (error) => {
+      console.error("[react-query][mutation][error]", error);
+      toast.error(`Action failed: ${error instanceof Error ? error.message : "Unknown error"}`);
+    },
+  }),
+});
+
+function DatabaseConnectionBanner() {
+  if (SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY) return null;
+
+  return (
+    <div className="fixed inset-x-0 top-0 z-[1000] bg-destructive px-4 py-2 text-center text-sm font-medium text-destructive-foreground">
+      Database not connected
+    </div>
+  );
+}
 
 function AuthGate({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -38,6 +68,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
       <TooltipProvider>
+        <DatabaseConnectionBanner />
         <Sonner position="bottom-right" />
         <BrowserRouter>
           <Routes>

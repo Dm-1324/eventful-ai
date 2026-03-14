@@ -10,39 +10,69 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          const { data } = await supabase
-            .from("profiles")
-            .select("*")
-            .eq("user_id", session.user.id)
-            .single();
-          setProfile(data);
-        } else {
-          setProfile(null);
-        }
-        setLoading(false);
-      }
-    );
+    let isMounted = true;
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        supabase
-          .from("profiles")
-          .select("*")
-          .eq("user_id", session.user.id)
-          .single()
-          .then(({ data }) => setProfile(data));
+    const loadProfile = async (userId: string) => {
+      const response = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", userId)
+        .maybeSingle();
+
+      console.log("[profiles.select.response]", response);
+
+      if (!isMounted) return;
+
+      if (response.error) {
+        console.error("[profiles.select.error]", response.error);
+        setProfile(null);
+        return;
       }
-      setLoading(false);
+
+      setProfile(response.data ?? null);
+    };
+
+    const handleSession = (nextSession: Session | null) => {
+      if (!isMounted) return;
+
+      setSession(nextSession);
+      setUser(nextSession?.user ?? null);
+
+      if (!nextSession?.user) {
+        setProfile(null);
+        setLoading(false);
+        return;
+      }
+
+      setLoading(true);
+      void loadProfile(nextSession.user.id).finally(() => {
+        if (isMounted) setLoading(false);
+      });
+    };
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      handleSession(nextSession);
     });
 
-    return () => subscription.unsubscribe();
+    supabase.auth.getSession()
+      .then(({ data: { session }, error }) => {
+        if (error) {
+          console.error("[auth.getSession.error]", error);
+          if (isMounted) setLoading(false);
+          return;
+        }
+
+        handleSession(session);
+      })
+      .catch((error) => {
+        console.error("[auth.getSession.catch]", error);
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {
@@ -67,15 +97,40 @@ export function useAuth() {
   };
 
   const updateProfile = async (updates: Partial<Tables<"profiles">>) => {
-    if (!user) return { error: new Error("Not authenticated") };
-    const { error } = await supabase
+    if (!user) return { data: null, error: new Error("Not authenticated") };
+
+    const updateResponse = await supabase
       .from("profiles")
       .update(updates)
-      .eq("user_id", user.id);
-    if (!error) {
-      setProfile((prev) => prev ? { ...prev, ...updates } : null);
+      .eq("user_id", user.id)
+      .select()
+      .maybeSingle();
+
+    if (updateResponse.error) {
+      return updateResponse;
     }
-    return { error };
+
+    if (updateResponse.data) {
+      setProfile(updateResponse.data);
+      return updateResponse;
+    }
+
+    const insertResponse = await supabase
+      .from("profiles")
+      .insert({
+        user_id: user.id,
+        name: updates.name ?? user.user_metadata?.name ?? "",
+        phone: updates.phone ?? null,
+        notification_preference: updates.notification_preference ?? "email",
+      })
+      .select()
+      .single();
+
+    if (!insertResponse.error) {
+      setProfile(insertResponse.data);
+    }
+
+    return insertResponse;
   };
 
   return { user, session, profile, loading, signIn, signUp, signOut, updateProfile };
