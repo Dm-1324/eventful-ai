@@ -67,15 +67,20 @@ export function useAuth() {
   };
 
   const updateProfile = async (updates: Partial<Tables<"profiles">>) => {
-    if (!user) return { error: new Error("Not authenticated") };
-    const { error } = await supabase
+    if (!user) return { data: null, error: new Error("Not authenticated") };
+
+    const response = await supabase
       .from("profiles")
       .update(updates)
-      .eq("user_id", user.id);
-    if (!error) {
-      setProfile((prev) => prev ? { ...prev, ...updates } : null);
+      .eq("user_id", user.id)
+      .select()
+      .single();
+
+    if (!response.error) {
+      setProfile(response.data);
     }
-    return { error };
+
+    return response;
   };
 
   return { user, session, profile, loading, signIn, signUp, signOut, updateProfile };
