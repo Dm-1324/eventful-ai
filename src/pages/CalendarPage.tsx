@@ -1,19 +1,18 @@
 import { useState, useMemo } from "react";
-import { useEvents, Event } from "@/hooks/useEvents";
+import { useEvents } from "@/hooks/useEvents";
 import { Badge } from "@/components/ui/badge";
-import { Clock, CalendarDays } from "lucide-react";
+import { Clock, CalendarDays, Bell } from "lucide-react";
 import {
   format,
-  parseISO,
   startOfMonth,
   endOfMonth,
   eachDayOfInterval,
-  isSameDay,
-  isSameMonth,
   startOfWeek,
   endOfWeek,
   addMonths,
   subMonths,
+  isSameMonth,
+  isSameDay,
 } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -33,8 +32,10 @@ export default function CalendarPage() {
     return eachDayOfInterval({ start, end });
   }, [currentMonth]);
 
-  const eventsForDate = (date: Date) =>
-    events.filter((e) => isSameDay(parseISO(e.event_date), date));
+  const eventsForDate = (date: Date) => {
+    const dateStr = format(date, "yyyy-MM-dd");
+    return events.filter((e) => e.event_date === dateStr);
+  };
 
   const selectedEvents = selectedDate ? eventsForDate(selectedDate) : [];
 
@@ -44,13 +45,13 @@ export default function CalendarPage() {
 
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Calendar Grid */}
-        <div className="flex-1 glass-card rounded-lg p-4">
+        <div className="flex-1 glass-card rounded-lg p-5">
           <div className="flex items-center justify-between mb-4">
-            <Button variant="ghost" size="icon" onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
+            <Button variant="ghost" size="icon" className="h-10 w-10 active:scale-95" onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
               <ChevronLeft className="h-4 w-4" />
             </Button>
             <h2 className="font-semibold">{format(currentMonth, "MMMM yyyy")}</h2>
-            <Button variant="ghost" size="icon" onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
+            <Button variant="ghost" size="icon" className="h-10 w-10 active:scale-95" onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
               <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
@@ -69,7 +70,7 @@ export default function CalendarPage() {
                   key={day.toISOString()}
                   onClick={() => setSelectedDate(day)}
                   className={cn(
-                    "relative p-2 rounded-lg text-sm transition-all duration-200 hover:bg-muted min-h-[40px]",
+                    "relative p-2 rounded-lg text-sm transition-all duration-200 hover:bg-muted min-h-[44px] active:scale-95",
                     !isCurrentMonth && "text-muted-foreground/40",
                     isSelected && "bg-primary text-primary-foreground hover:bg-primary",
                     isCurrentDay && !isSelected && "ring-1 ring-primary"
@@ -82,7 +83,7 @@ export default function CalendarPage() {
                         <div
                           key={i}
                           className={cn(
-                            "w-1 h-1 rounded-full",
+                            "w-1.5 h-1.5 rounded-full",
                             isSelected ? "bg-primary-foreground" : "bg-primary"
                           )}
                         />
@@ -101,10 +102,11 @@ export default function CalendarPage() {
             {selectedDate && (
               <motion.div
                 key={selectedDate.toISOString()}
-                initial={{ opacity: 0, x: 10 }}
+                initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
-                className="glass-card rounded-lg p-4"
+                transition={{ duration: 0.25 }}
+                className="glass-card rounded-lg p-5"
               >
                 <h3 className="font-semibold mb-1">{format(selectedDate, "EEEE")}</h3>
                 <p className="text-sm text-muted-foreground mb-4">{format(selectedDate, "MMMM d, yyyy")}</p>
@@ -114,8 +116,13 @@ export default function CalendarPage() {
                 ) : (
                   <div className="space-y-3">
                     {selectedEvents.map((event) => (
-                      <div key={event.id} className="rounded-lg border border-border p-3 space-y-1">
-                        <h4 className="font-medium text-sm">{event.title}</h4>
+                      <div key={event.id} className="rounded-lg border border-border p-4 space-y-2">
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded bg-primary/10 flex items-center justify-center text-primary text-xs font-semibold">
+                            {event.title.charAt(0).toUpperCase()}
+                          </div>
+                          <h4 className="font-medium text-sm">{event.title}</h4>
+                        </div>
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <Clock className="h-3 w-3" />
                           <span>{event.start_time.slice(0, 5)}</span>
@@ -123,6 +130,9 @@ export default function CalendarPage() {
                         {event.description && (
                           <p className="text-xs text-muted-foreground line-clamp-2">{event.description}</p>
                         )}
+                        <Badge variant="secondary" className="rounded-full text-xs">
+                          <Bell className="h-3 w-3 mr-1" />{event.reminder_minutes_before}m
+                        </Badge>
                       </div>
                     ))}
                   </div>

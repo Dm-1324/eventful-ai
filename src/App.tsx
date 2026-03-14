@@ -1,11 +1,12 @@
 import { QueryClient, QueryClientProvider, QueryCache, MutationCache } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/lib/theme";
 import { useAuth } from "@/hooks/useAuth";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { toast } from "sonner";
+import { motion, AnimatePresence } from "framer-motion";
 import LoginPage from "@/pages/LoginPage";
 import DashboardPage from "@/pages/DashboardPage";
 import EventsPage from "@/pages/EventsPage";
@@ -64,6 +65,33 @@ function PublicGate({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+function AnimatedRoutes() {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 8 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Routes location={location}>
+          <Route path="/login" element={<PublicGate><LoginPage /></PublicGate>} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route element={<AuthGate><AppLayout /></AuthGate>}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/events" element={<EventsPage />} />
+            <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
@@ -71,17 +99,7 @@ const App = () => (
         <DatabaseConnectionBanner />
         <Sonner position="bottom-right" />
         <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<PublicGate><LoginPage /></PublicGate>} />
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route element={<AuthGate><AppLayout /></AuthGate>}>
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/events" element={<EventsPage />} />
-              <Route path="/calendar" element={<CalendarPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AnimatedRoutes />
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
