@@ -154,4 +154,21 @@
   .pill {
     @apply inline-flex items-center px-3 py-1 text-xs font-medium rounded-full;
   }
+  .login-gradient-bg {
+    background: linear-gradient(135deg, hsl(var(--background)), hsl(var(--card)), hsl(var(--background)));
+    background-size: 400% 400%;
+    animation: login-gradient 12s ease infinite;
+  }
+  @keyframes login-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .animate-pulse-gentle {
+    animation: pulse-gentle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @keyframes pulse-gentle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; transform: scale(1.02); }
+  }
 }

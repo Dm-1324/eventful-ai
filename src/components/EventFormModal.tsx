@@ -88,19 +88,19 @@ export function EventFormModal({ open, onOpenChange, editEvent }: EventFormModal
   };
 
   const formContent = (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid gap-4 sm:grid-cols-2">
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid gap-5 sm:grid-cols-2">
         <div className="sm:col-span-2 space-y-2">
           <Label htmlFor="title">Title</Label>
-          <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Event title" required />
+          <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Event title" required className="h-10" />
         </div>
         <div className="space-y-2">
           <Label htmlFor="date" className="flex items-center gap-1"><Calendar className="h-3 w-3" /> Date</Label>
-          <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+          <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} required className="h-10" />
         </div>
         <div className="space-y-2">
           <Label htmlFor="time" className="flex items-center gap-1"><Clock className="h-3 w-3" /> Time</Label>
-          <Input id="time" type="time" value={time} onChange={(e) => setTime(e.target.value)} required />
+          <Input id="time" type="time" value={time} onChange={(e) => setTime(e.target.value)} required className="h-10" />
         </div>
         <div className="sm:col-span-2 space-y-2">
           <Label htmlFor="desc" className="flex items-center justify-between">
@@ -112,7 +112,7 @@ export function EventFormModal({ open, onOpenChange, editEvent }: EventFormModal
         <div className="space-y-2">
           <Label className="flex items-center gap-1"><Bell className="h-3 w-3" /> Reminder</Label>
           <Select value={reminder} onValueChange={setReminder}>
-            <SelectTrigger><SelectValue /></SelectTrigger>
+            <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
             <SelectContent>
               <SelectItem value="5">5 minutes before</SelectItem>
               <SelectItem value="10">10 minutes before</SelectItem>
@@ -135,7 +135,7 @@ export function EventFormModal({ open, onOpenChange, editEvent }: EventFormModal
                 type="button"
                 onClick={() => setNotifPref(opt.val)}
                 className={cn(
-                  "pill border transition-colors",
+                  "pill border transition-colors min-h-[36px]",
                   notifPref === opt.val ? "bg-primary text-primary-foreground border-primary" : "bg-muted text-muted-foreground border-border"
                 )}
               >
@@ -156,15 +156,15 @@ export function EventFormModal({ open, onOpenChange, editEvent }: EventFormModal
           </p>
           {description && <p className="text-sm text-muted-foreground line-clamp-2">{description}</p>}
           <div className="flex gap-2 pt-1">
-            <Badge variant="secondary" className="rounded-pill text-xs">{reminder} min reminder</Badge>
-            <Badge variant="outline" className="rounded-pill text-xs capitalize">{notifPref}</Badge>
+            <Badge variant="secondary" className="rounded-full text-xs">{reminder} min reminder</Badge>
+            <Badge variant="outline" className="rounded-full text-xs capitalize">{notifPref}</Badge>
           </div>
         </div>
       )}
 
-      <div className="flex justify-end gap-2 pt-2">
-        <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>Cancel</Button>
-        <Button type="submit" disabled={createEvent.isPending || updateEvent.isPending}>
+      <div className="flex justify-end gap-3 pt-2">
+        <Button type="button" variant="ghost" onClick={() => onOpenChange(false)} className="h-10 px-4 active:scale-95">Cancel</Button>
+        <Button type="submit" disabled={createEvent.isPending || updateEvent.isPending} className="h-10 px-4 active:scale-95">
           {editEvent ? "Update Event" : "Create Event"}
         </Button>
       </div>
