@@ -83,7 +83,7 @@ export default function DashboardPage() {
                 key={event.id}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.06 }}
                 className={cn("glass-card rounded-lg p-4 border-l-4 hover-lift", getNotifBorderColor(event.notification_preference))}
               >
                 <div className="flex items-start justify-between">
