@@ -62,10 +62,10 @@ export default function LoginPage() {
         >
           <div className="flex items-center justify-center gap-2 mb-6">
             <Sparkles className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl font-bold">AI Event Assistant</h1>
+            <h1 className="text-3xl font-bold">Athena</h1>
           </div>
           <p className="text-lg text-muted-foreground mb-12">
-            Organize your events intelligently. Get smart reminders, beautiful calendar views, and seamless management.
+            Hi, I'm Athena — your personal event assistant. Let me help you organize your world.
           </p>
         </motion.div>
 
