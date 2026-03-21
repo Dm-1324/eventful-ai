@@ -18,7 +18,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const setTheme = (t: Theme) => {
     setThemeState(t);
-    localStorage.setItem("ai-event-theme", t);
+    localStorage.setItem("athena-theme", t);
   };
 
   useEffect(() => {

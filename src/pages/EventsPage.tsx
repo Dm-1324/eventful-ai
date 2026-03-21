@@ -125,7 +125,7 @@ export default function EventsPage() {
                 key={event.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
+                transition={{ delay: i * 0.03 }}
                 className={cn("glass-card rounded-lg p-5 hover-lift group border-l-4", getNotifBorderColor(event.notification_preference))}
               >
                 <div className="flex items-start justify-between mb-3">

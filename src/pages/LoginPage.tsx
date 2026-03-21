@@ -103,7 +103,7 @@ export default function LoginPage() {
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center justify-center gap-2 mb-8">
             <Sparkles className="h-6 w-6 text-primary" />
-            <h1 className="text-2xl font-bold">AI Event Assistant</h1>
+            <h1 className="text-2xl font-bold">Athena</h1>
           </div>
 
           {/* Tab switcher with sliding indicator */}
