@@ -94,7 +94,7 @@ export default function SettingsPage() {
       </motion.div>
 
       {/* Appearance */}
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="glass-card rounded-lg p-6 space-y-4">
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="glass-card rounded-lg p-6 space-y-4">
         <div className="flex items-center gap-2 mb-2">
           <Palette className="h-5 w-5 text-primary" />
           <h2 className="font-semibold text-lg">Appearance</h2>
