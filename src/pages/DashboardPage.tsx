@@ -40,7 +40,7 @@ export default function DashboardPage() {
   const weekEvents = useMemo(() => events.filter((e) => e.event_date >= weekStart && e.event_date <= weekEnd), [events, weekStart, weekEnd]);
   const upcomingEvents = useMemo(() => events.filter((e) => e.event_date >= todayStr).sort((a, b) => a.event_date.localeCompare(b.event_date) || a.start_time.localeCompare(b.start_time)), [events, todayStr]);
 
-  const containerVariants = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
+  const containerVariants = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } };
   const cardVariant = { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } };
 
   return (
