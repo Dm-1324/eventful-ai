@@ -46,7 +46,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-        <h1 className="text-2xl font-bold">{greeting}, {profile?.name || "there"} 👋</h1>
+        <h1 className="text-2xl font-bold">{greeting}, {profile?.name || "there"}</h1>
         <p className="text-muted-foreground text-sm">{format(new Date(), "EEEE, MMMM d, yyyy")}</p>
       </motion.div>
 
