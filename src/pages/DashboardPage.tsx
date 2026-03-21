@@ -40,13 +40,13 @@ export default function DashboardPage() {
   const weekEvents = useMemo(() => events.filter((e) => e.event_date >= weekStart && e.event_date <= weekEnd), [events, weekStart, weekEnd]);
   const upcomingEvents = useMemo(() => events.filter((e) => e.event_date >= todayStr).sort((a, b) => a.event_date.localeCompare(b.event_date) || a.start_time.localeCompare(b.start_time)), [events, todayStr]);
 
-  const containerVariants = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
+  const containerVariants = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } };
   const cardVariant = { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } };
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-        <h1 className="text-2xl font-bold">{greeting}, {profile?.name || "there"} 👋</h1>
+        <h1 className="text-2xl font-bold">{greeting}, {profile?.name || "there"}</h1>
         <p className="text-muted-foreground text-sm">{format(new Date(), "EEEE, MMMM d, yyyy")}</p>
       </motion.div>
 
@@ -83,7 +83,7 @@ export default function DashboardPage() {
                 key={event.id}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.06 }}
                 className={cn("glass-card rounded-lg p-4 border-l-4 hover-lift", getNotifBorderColor(event.notification_preference))}
               >
                 <div className="flex items-start justify-between">
@@ -124,7 +124,7 @@ export default function DashboardPage() {
                   key={event.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
+                  transition={{ delay: i * 0.06 }}
                   className={cn("glass-card rounded-lg p-4 border-l-4 hover-lift", getNotifBorderColor(event.notification_preference))}
                 >
                   <div className="flex items-start justify-between">

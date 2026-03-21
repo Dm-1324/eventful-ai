@@ -46,7 +46,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
       <div className="flex items-center gap-2">
         <SidebarTrigger className="mr-2" />
         <Sparkles className="h-5 w-5 text-primary" />
-        <span className="font-semibold text-sm hidden sm:block">AI Event Assistant</span>
+        <span className="font-semibold text-sm hidden sm:block">Athena</span>
       </div>
 
       <button

@@ -13,12 +13,12 @@ export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<Theme>(() => {
-    return (localStorage.getItem("ai-event-theme") as Theme) || "claude";
+    return (localStorage.getItem("athena-theme") as Theme) || "claude";
   });
 
   const setTheme = (t: Theme) => {
     setThemeState(t);
-    localStorage.setItem("ai-event-theme", t);
+    localStorage.setItem("athena-theme", t);
   };
 
   useEffect(() => {

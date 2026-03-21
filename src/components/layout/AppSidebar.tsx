@@ -1,4 +1,4 @@
-import { LayoutDashboard, CalendarDays, Calendar, Settings } from "lucide-react";
+import { LayoutDashboard, CalendarDays, Calendar, Settings, Shield } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import {
@@ -6,7 +6,7 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -27,9 +27,14 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarContent className="pt-4">
+      <SidebarHeader className="p-4">
+        <div className="flex items-center gap-2">
+          <Shield className="h-5 w-5 text-primary shrink-0" />
+          {!collapsed && <span className="font-bold text-lg text-primary">Athena</span>}
+        </div>
+      </SidebarHeader>
+      <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => (
