@@ -498,16 +498,16 @@ export default function LandingPage() {
         <Anim className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-white">Simple, honest pricing</h2>
         </Anim>
-        <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-6">
+        <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-6 items-stretch">
           {/* Free */}
           <Anim>
-            <div className={`${cardStyle} p-8 flex flex-col h-full`}>
-              <p className="text-[#94a3b8] text-sm font-medium mb-1">Free forever</p>
-              <p className="text-4xl font-bold text-white mb-6">$0</p>
-              <ul className="space-y-3 mb-8 flex-1">
+            <div className="rounded-2xl border border-white/10 backdrop-blur-sm p-10 flex flex-col h-full" style={{ background: "rgba(255,255,255,0.03)" }}>
+              <p className="text-[#94a3b8] text-sm font-medium mb-2">Free forever</p>
+              <p className="text-6xl font-black text-white mb-8">$0</p>
+              <ul className="space-y-4 mb-10 flex-1">
                 {freeFeatures.map((f) => (
                   <li key={f} className="flex items-center gap-2 text-sm text-[#e2e8f0]">
-                    <Check className="w-4 h-4 text-[#6366f1] flex-shrink-0" />{f}
+                    <Check className="w-4 h-4 flex-shrink-0" style={{ color: "#6366f1" }} />{f}
                   </li>
                 ))}
               </ul>
@@ -518,26 +518,28 @@ export default function LandingPage() {
           </Anim>
           {/* Pro */}
           <Anim delay={0.12}>
-            <div className={`relative p-8 rounded-2xl backdrop-blur-sm flex flex-col h-full border`} style={{ background: "rgba(255,255,255,0.03)", borderColor: "rgba(139,92,246,0.3)", boxShadow: "0 0 60px rgba(139,92,246,0.1)" }}>
-              <div className="absolute -top-3 right-6">
-                <span className="px-3 py-1 rounded-full text-xs font-semibold text-white" style={{ backgroundImage: GRADIENT }}>Most Popular</span>
+            <div className="rounded-2xl p-[1px] h-full" style={{ backgroundImage: GRADIENT, boxShadow: "0 0 60px rgba(139,92,246,0.15)" }}>
+              <div className="rounded-2xl backdrop-blur-sm p-10 flex flex-col h-full relative" style={{ background: "rgba(5,5,8,0.95)" }}>
+                <div className="absolute -top-3 right-6">
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold text-white" style={{ backgroundImage: GRADIENT }}>Most Popular</span>
+                </div>
+                <p className="text-[#94a3b8] text-sm font-medium mb-2">Pro</p>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <p className="text-6xl font-black text-white">$5</p>
+                  <span className="text-[#64748b] text-sm">/mo</span>
+                </div>
+                <span className="inline-block mb-8 px-3 py-1 rounded-full text-xs font-semibold text-white w-fit" style={{ backgroundImage: "linear-gradient(135deg, #f59e0b, #f97316)" }}>Coming Soon</span>
+                <ul className="space-y-4 mb-10 flex-1">
+                  {proFeatures.map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-sm text-[#e2e8f0]">
+                      <Check className="w-4 h-4 flex-shrink-0" style={{ color: "#8b5cf6" }} />{f}
+                    </li>
+                  ))}
+                </ul>
+                <button className={`${btnGradient} border border-white/20 bg-transparent hover:bg-white/5 text-center w-full`}>
+                  Join Waitlist
+                </button>
               </div>
-              <p className="text-[#94a3b8] text-sm font-medium mb-1">Pro</p>
-              <div className="flex items-baseline gap-2 mb-1">
-                <p className="text-4xl font-bold text-white">$5</p>
-                <span className="text-[#64748b] text-sm">/mo</span>
-              </div>
-              <span className="inline-block mb-6 px-2 py-0.5 rounded text-xs font-medium" style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}>Coming Soon</span>
-              <ul className="space-y-3 mb-8 flex-1">
-                {proFeatures.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm text-[#e2e8f0]">
-                    <Check className="w-4 h-4 text-[#8b5cf6] flex-shrink-0" />{f}
-                  </li>
-                ))}
-              </ul>
-              <button className={`${btnGradient} border border-white/20 bg-transparent hover:bg-white/5 text-center w-full`}>
-                Join Waitlist
-              </button>
             </div>
           </Anim>
         </div>
