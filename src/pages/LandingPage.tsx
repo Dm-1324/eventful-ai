@@ -478,7 +478,8 @@ export default function LandingPage() {
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: 5 }).map((_, j) => <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
                 </div>
-                <p className="text-[#e2e8f0] text-sm leading-relaxed mb-6">"{t.quote}"</p>
+                <div className="text-5xl font-serif leading-none text-white/20 mb-2">&ldquo;</div>
+                <p className="text-[#e2e8f0] text-lg font-medium leading-relaxed mb-6">{t.quote}</p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ backgroundImage: GRADIENT }}>{t.initials}</div>
                   <div>
