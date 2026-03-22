@@ -447,21 +447,20 @@ export default function LandingPage() {
       </section>
 
       {/* ---- HOW IT WORKS ---- */}
-      <section id="how-it-works" className="relative z-10 py-24 px-4">
-        <Anim className="text-center mb-16">
+      <section id="how-it-works" className="relative z-10 py-32 px-4">
+        <Anim className="text-center mb-20">
           <h2 className="text-3xl sm:text-4xl font-bold text-white">Up and running in minutes</h2>
         </Anim>
         <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-8 relative">
-          {/* Dashed connecting line on desktop */}
-          <div className="hidden md:block absolute top-16 left-[16%] right-[16%] h-[1px] border-t border-dashed border-white/10" />
+          <div className="hidden md:block absolute top-7 left-[20%] right-[20%] border-t-2 border-dashed border-white/20" />
           {steps.map((s, i) => (
             <Anim key={s.num} delay={i * 0.15} className="relative text-center">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-[80px] font-black leading-none opacity-[0.04] pointer-events-none select-none" style={{ backgroundImage: GRADIENT, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{s.num}</div>
-              <div className="relative w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4 border border-white/10" style={{ backgroundImage: GRADIENT, boxShadow: "0 0 30px rgba(99,102,241,0.15)" }}>
+              <div className="absolute top-8 left-1/2 -translate-x-1/2 text-8xl font-black leading-none text-white/[0.03] pointer-events-none select-none">{s.num}</div>
+              <div className="relative w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-6 border border-white/10" style={{ backgroundImage: GRADIENT, boxShadow: "0 0 30px rgba(99,102,241,0.15)" }}>
                 <span className="text-white font-bold text-lg">{s.num}</span>
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">{s.title}</h3>
-              <p className="text-sm text-[#94a3b8] leading-relaxed">{s.desc}</p>
+              <h3 className="text-lg font-semibold text-white mb-2 relative">{s.title}</h3>
+              <p className="text-sm text-[#94a3b8] leading-relaxed relative">{s.desc}</p>
             </Anim>
           ))}
         </div>
