@@ -429,15 +429,14 @@ export default function LandingPage() {
         <div className="grid sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {features.map((f, i) => (
             <Anim key={f.title} delay={i * 0.12}>
-              <div className={`${cardStyle} p-8 group hover:border-white/20 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden`}
-                style={{ boxShadow: `0 0 0px ${f.color}00` }}
-                onMouseEnter={(e) => (e.currentTarget.style.boxShadow = `0 0 40px ${f.color}20`)}
+              <div className="rounded-2xl p-10 group hover:border-[rgba(255,255,255,0.25)] border border-[rgba(255,255,255,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
+                style={{ background: "rgba(255,255,255,0.05)", boxShadow: `0 0 0px ${f.color}00` }}
+                onMouseEnter={(e) => (e.currentTarget.style.boxShadow = `0 0 50px ${f.color}25`)}
                 onMouseLeave={(e) => (e.currentTarget.style.boxShadow = `0 0 0px ${f.color}00`)}
               >
-                {/* Top gradient line */}
-                <div className="absolute top-0 inset-x-0 h-[1px]" style={{ backgroundImage: `linear-gradient(90deg, transparent, ${f.color}, transparent)` }} />
-                <div className="w-12 h-12 rounded-full flex items-center justify-center mb-5 border" style={{ borderColor: `${f.color}40`, boxShadow: `0 0 20px ${f.color}15` }}>
-                  <f.icon className="w-6 h-6" style={{ color: f.color }} />
+                <div className="absolute top-0 inset-x-0 h-[2px]" style={{ backgroundImage: `linear-gradient(90deg, transparent, ${f.color}, transparent)` }} />
+                <div className="w-14 h-14 rounded-full flex items-center justify-center mb-6 border" style={{ borderColor: `${f.color}40`, boxShadow: `0 0 20px ${f.color}99` }}>
+                  <f.icon className="w-7 h-7" style={{ color: f.color }} />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">{f.title}</h3>
                 <p className="text-sm text-[#94a3b8] leading-relaxed">{f.desc}</p>
