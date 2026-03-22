@@ -429,15 +429,14 @@ export default function LandingPage() {
         <div className="grid sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {features.map((f, i) => (
             <Anim key={f.title} delay={i * 0.12}>
-              <div className={`${cardStyle} p-8 group hover:border-white/20 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden`}
-                style={{ boxShadow: `0 0 0px ${f.color}00` }}
-                onMouseEnter={(e) => (e.currentTarget.style.boxShadow = `0 0 40px ${f.color}20`)}
+              <div className="rounded-2xl p-10 group hover:border-[rgba(255,255,255,0.25)] border border-[rgba(255,255,255,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
+                style={{ background: "rgba(255,255,255,0.05)", boxShadow: `0 0 0px ${f.color}00` }}
+                onMouseEnter={(e) => (e.currentTarget.style.boxShadow = `0 0 50px ${f.color}25`)}
                 onMouseLeave={(e) => (e.currentTarget.style.boxShadow = `0 0 0px ${f.color}00`)}
               >
-                {/* Top gradient line */}
-                <div className="absolute top-0 inset-x-0 h-[1px]" style={{ backgroundImage: `linear-gradient(90deg, transparent, ${f.color}, transparent)` }} />
-                <div className="w-12 h-12 rounded-full flex items-center justify-center mb-5 border" style={{ borderColor: `${f.color}40`, boxShadow: `0 0 20px ${f.color}15` }}>
-                  <f.icon className="w-6 h-6" style={{ color: f.color }} />
+                <div className="absolute top-0 inset-x-0 h-[2px]" style={{ backgroundImage: `linear-gradient(90deg, transparent, ${f.color}, transparent)` }} />
+                <div className="w-14 h-14 rounded-full flex items-center justify-center mb-6 border" style={{ borderColor: `${f.color}40`, boxShadow: `0 0 20px ${f.color}99` }}>
+                  <f.icon className="w-7 h-7" style={{ color: f.color }} />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">{f.title}</h3>
                 <p className="text-sm text-[#94a3b8] leading-relaxed">{f.desc}</p>
@@ -448,21 +447,20 @@ export default function LandingPage() {
       </section>
 
       {/* ---- HOW IT WORKS ---- */}
-      <section id="how-it-works" className="relative z-10 py-24 px-4">
-        <Anim className="text-center mb-16">
+      <section id="how-it-works" className="relative z-10 py-32 px-4">
+        <Anim className="text-center mb-20">
           <h2 className="text-3xl sm:text-4xl font-bold text-white">Up and running in minutes</h2>
         </Anim>
         <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-8 relative">
-          {/* Dashed connecting line on desktop */}
-          <div className="hidden md:block absolute top-16 left-[16%] right-[16%] h-[1px] border-t border-dashed border-white/10" />
+          <div className="hidden md:block absolute top-7 left-[20%] right-[20%] border-t-2 border-dashed border-white/20" />
           {steps.map((s, i) => (
             <Anim key={s.num} delay={i * 0.15} className="relative text-center">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-[80px] font-black leading-none opacity-[0.04] pointer-events-none select-none" style={{ backgroundImage: GRADIENT, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{s.num}</div>
-              <div className="relative w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4 border border-white/10" style={{ backgroundImage: GRADIENT, boxShadow: "0 0 30px rgba(99,102,241,0.15)" }}>
+              <div className="absolute top-8 left-1/2 -translate-x-1/2 text-8xl font-black leading-none text-white/[0.03] pointer-events-none select-none">{s.num}</div>
+              <div className="relative w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-6 border border-white/10" style={{ backgroundImage: GRADIENT, boxShadow: "0 0 30px rgba(99,102,241,0.15)" }}>
                 <span className="text-white font-bold text-lg">{s.num}</span>
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">{s.title}</h3>
-              <p className="text-sm text-[#94a3b8] leading-relaxed">{s.desc}</p>
+              <h3 className="text-lg font-semibold text-white mb-2 relative">{s.title}</h3>
+              <p className="text-sm text-[#94a3b8] leading-relaxed relative">{s.desc}</p>
             </Anim>
           ))}
         </div>
@@ -480,7 +478,8 @@ export default function LandingPage() {
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: 5 }).map((_, j) => <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
                 </div>
-                <p className="text-[#e2e8f0] text-sm leading-relaxed mb-6">"{t.quote}"</p>
+                <div className="text-5xl font-serif leading-none text-white/20 mb-2">&ldquo;</div>
+                <p className="text-[#e2e8f0] text-lg font-medium leading-relaxed mb-6">{t.quote}</p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ backgroundImage: GRADIENT }}>{t.initials}</div>
                   <div>
@@ -499,16 +498,16 @@ export default function LandingPage() {
         <Anim className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-white">Simple, honest pricing</h2>
         </Anim>
-        <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-6">
+        <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-6 items-stretch">
           {/* Free */}
           <Anim>
-            <div className={`${cardStyle} p-8 flex flex-col h-full`}>
-              <p className="text-[#94a3b8] text-sm font-medium mb-1">Free forever</p>
-              <p className="text-4xl font-bold text-white mb-6">$0</p>
-              <ul className="space-y-3 mb-8 flex-1">
+            <div className="rounded-2xl border border-white/10 backdrop-blur-sm p-10 flex flex-col h-full" style={{ background: "rgba(255,255,255,0.03)" }}>
+              <p className="text-[#94a3b8] text-sm font-medium mb-2">Free forever</p>
+              <p className="text-6xl font-black text-white mb-8">$0</p>
+              <ul className="space-y-4 mb-10 flex-1">
                 {freeFeatures.map((f) => (
                   <li key={f} className="flex items-center gap-2 text-sm text-[#e2e8f0]">
-                    <Check className="w-4 h-4 text-[#6366f1] flex-shrink-0" />{f}
+                    <Check className="w-4 h-4 flex-shrink-0" style={{ color: "#6366f1" }} />{f}
                   </li>
                 ))}
               </ul>
@@ -519,26 +518,28 @@ export default function LandingPage() {
           </Anim>
           {/* Pro */}
           <Anim delay={0.12}>
-            <div className={`relative p-8 rounded-2xl backdrop-blur-sm flex flex-col h-full border`} style={{ background: "rgba(255,255,255,0.03)", borderColor: "rgba(139,92,246,0.3)", boxShadow: "0 0 60px rgba(139,92,246,0.1)" }}>
-              <div className="absolute -top-3 right-6">
-                <span className="px-3 py-1 rounded-full text-xs font-semibold text-white" style={{ backgroundImage: GRADIENT }}>Most Popular</span>
+            <div className="rounded-2xl p-[1px] h-full" style={{ backgroundImage: GRADIENT, boxShadow: "0 0 60px rgba(139,92,246,0.15)" }}>
+              <div className="rounded-2xl backdrop-blur-sm p-10 flex flex-col h-full relative" style={{ background: "rgba(5,5,8,0.95)" }}>
+                <div className="absolute -top-3 right-6">
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold text-white" style={{ backgroundImage: GRADIENT }}>Most Popular</span>
+                </div>
+                <p className="text-[#94a3b8] text-sm font-medium mb-2">Pro</p>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <p className="text-6xl font-black text-white">$5</p>
+                  <span className="text-[#64748b] text-sm">/mo</span>
+                </div>
+                <span className="inline-block mb-8 px-3 py-1 rounded-full text-xs font-semibold text-white w-fit" style={{ backgroundImage: "linear-gradient(135deg, #f59e0b, #f97316)" }}>Coming Soon</span>
+                <ul className="space-y-4 mb-10 flex-1">
+                  {proFeatures.map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-sm text-[#e2e8f0]">
+                      <Check className="w-4 h-4 flex-shrink-0" style={{ color: "#8b5cf6" }} />{f}
+                    </li>
+                  ))}
+                </ul>
+                <button className={`${btnGradient} border border-white/20 bg-transparent hover:bg-white/5 text-center w-full`}>
+                  Join Waitlist
+                </button>
               </div>
-              <p className="text-[#94a3b8] text-sm font-medium mb-1">Pro</p>
-              <div className="flex items-baseline gap-2 mb-1">
-                <p className="text-4xl font-bold text-white">$5</p>
-                <span className="text-[#64748b] text-sm">/mo</span>
-              </div>
-              <span className="inline-block mb-6 px-2 py-0.5 rounded text-xs font-medium" style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}>Coming Soon</span>
-              <ul className="space-y-3 mb-8 flex-1">
-                {proFeatures.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm text-[#e2e8f0]">
-                    <Check className="w-4 h-4 text-[#8b5cf6] flex-shrink-0" />{f}
-                  </li>
-                ))}
-              </ul>
-              <button className={`${btnGradient} border border-white/20 bg-transparent hover:bg-white/5 text-center w-full`}>
-                Join Waitlist
-              </button>
             </div>
           </Anim>
         </div>
